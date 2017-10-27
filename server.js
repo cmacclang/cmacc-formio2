@@ -12,6 +12,9 @@ app.use('/lib/bootstrap', express.static('node_modules/bootstrap/dist'));
 app.use('/forms', express.static('forms'));
 app.use('/', express.static('html'));
 
+
+app.use('/api', require('./api/Api'));
+
 //app.use(require('./routes/testRoute'));
 
 app.listen(port, () => {

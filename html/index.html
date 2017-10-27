@@ -5,15 +5,30 @@
   <script src='/lib/formiojs/formio.full.min.js'></script>
   <script type='text/javascript'>
     window.onload = function() {
-      fetch('/forms/test_form.json')
+      const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      };
+
+      fetch('/forms/huurovereenkomst.json')
         .then((res) => {
           return res.json()
         })
         .then((data) => {
-          var formio = Formio.createForm(document.getElementById('formio'), data);
-
+          return Formio.createForm(document.getElementById('formio'), data);
         })
-
+        .then((form) => {
+          form.on('submit', (submission) => {
+            opts = {
+              headers,
+              method: 'POST',
+              body: JSON.stringify(submission)
+            };
+            fetch('/api/', opts)
+                .then(function(res){ console.log(res) })
+                .catch(function(res){ console.log(res) })
+          });
+        });
     };
   </script>
 </head>
